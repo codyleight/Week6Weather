@@ -1,0 +1,19 @@
+body {
+    
+        background-image: linear-gradient(rgb(0, 195, 255), rgb(166, 255, 0));
+     
+}
+
+.card-body{
+   
+        background-image: linear-gradient(rgb(130, 182, 250), rgb(146, 241, 175));
+      
+}
+
+.navGrad{
+    background: #13CF4B;
+    background: linear-gradient(to right, #13CF4B 0%, #138ACF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

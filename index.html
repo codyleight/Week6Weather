@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Viewer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark justify-content-between mb-5">
+        <a class="navbar-brand fs-2 navGrad">Weather Watcher</a>
+        <form class="form-inline cityName">
+          <input class="whatCity" type="search" placeholder="City name" aria-label="Search">
+          <button class="btn btn-outline-success bg-warning" type="submit">Search</button>
+        </form>
+      </nav>
+
+      <h2 class="text-center">City</h2>
+      <div class="card text-center mb-5"> <!-- City Card, Weather of this city will go here.-->
+        <div class="card-header">
+         <!-- City name will go here-->
+        </div>
+        <div class="card-body font-weight-bold">
+          <h5 class="cityTitle "></h5>
+          <p class="currentTemp text-center">Current Tempature</p>
+          <p class="currentWind">Current Wind</p>
+          <p class="currentHumidity">Current Humidity</p>
+          <p class="date1 text-info font-weight-bold"></p>
+        </div>
+        <div class="card-footer">
+          
+        </div>
+      </div>
+
+      <h3 class="text-center">5 day Forecast</h3>
+
+      <div class="card-group m-3"> <!-- Section is 5 day weather cast. We need an above section with the city and current weather.-->
+
+        <div class="card m-2">
+          <img class="card-img-top" src="" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text1">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Last updated 3 mins ago</small> <!-- we need this to be the date.-->
+          </div>
+        </div>
+
+        <div class="card m-2">
+          <img class="card-img-top" src="" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Last updated 3 mins ago</small>
+          </div>
+        </div>
+
+        <div class="card m-2">
+          <img class="card-img-top" src="" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Last updated 3 mins ago</small>
+          </div>
+        </div>
+
+        <div class="card m-2">
+            <img class="card-img-top" src="" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+
+          <div class="card m-2">
+            <img class="card-img-top" src="" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Last updated 3 mins ago</small>
+            </div>
+          </div>
+      </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
