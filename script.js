@@ -5,10 +5,14 @@ var cityTitle = $(".cityTitle")
 var currentTemp = $(".currentTemp")
 var currentWind = $(".currentWind")
 var currentHumidity = $(".currentHumidity")
+var dropDown = $(".dropdown-divider");
+var firstLoad = true;
+var cityName;
 
 var newParagraph = $('<p>');
 var newParagraph1 = $('<p>');
 var newParagraph2 = $('<p>');
+var newAnchor = $('<a>');
 
 var itemsAppended = false; //checking if we have previously appended items.
 
@@ -19,19 +23,17 @@ var day4 = $(".day4")
 var day5 = $(".day5")
 
 
-/* fetch(requestUrl)
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    console.log(data);
-  }); */
+
 
 function cityHandler(event) { //grab what city they want on event
     
     event.preventDefault();
 
     var cityName = whatCity.val();
+
+    dropDown.after(newAnchor);
+    newAnchor.addClass('dropdown-item');
+    newAnchor.text(cityName);
 
 
     var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&appid=4a9827780393807327e2dc82f1ce3e68';
@@ -134,6 +136,8 @@ function cityHandler(event) { //grab what city they want on event
 
 
 }
+
+
 
 
   cityValue.on('submit', cityHandler);

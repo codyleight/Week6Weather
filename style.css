@@ -17,3 +17,7 @@ body {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+div .card{
+        background-color: rgba(190, 1, 175, 0.438);
+}
