@@ -5,13 +5,14 @@ var cityTitle = $(".cityTitle")
 var currentTemp = $(".currentTemp")
 var currentWind = $(".currentWind")
 var currentHumidity = $(".currentHumidity")
-var dropDown = $(".dropdown-divider");
+var dropDown = $(".itemDefault");
 var firstLoad = true;
 var cityName;
 
-var newParagraph = $('<p>');
-var newParagraph1 = $('<p>');
-var newParagraph2 = $('<p>');
+
+var isAppended = false;
+
+
 var newAnchor = $('<a>');
 
 var itemsAppended = false; //checking if we have previously appended items.
@@ -25,15 +26,33 @@ var day5 = $(".day5")
 
 
 
+
+
 function cityHandler(event) { //grab what city they want on event
     
     event.preventDefault();
 
-    var cityName = whatCity.val();
+    if (firstLoad){
 
-    dropDown.after(newAnchor);
-    newAnchor.addClass('dropdown-item');
-    newAnchor.text(cityName);
+    cityName = "San Antonio";
+    firstLoad = false;
+    }else{ 
+      cityName = whatCity.val();
+      console.log("here");
+    }
+
+    
+
+  
+
+    
+    dropDown.text(cityName);
+     
+    
+
+
+
+   
 
 
     var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&appid=4a9827780393807327e2dc82f1ce3e68';
@@ -50,6 +69,7 @@ function cityHandler(event) { //grab what city they want on event
     console.log(weatherResults.main.temp);
     temp = (temp - 273.15) * 9/5 + 32; //Kelvin to Fahrenheit conversion
     var tempFixed = Math.floor(temp); //rounding Temp to a whole number.
+  
 
 
     var icon = weatherResults.weather[0].icon; // Grabs Icon from our current weather.
@@ -77,13 +97,18 @@ function cityHandler(event) { //grab what city they want on event
 
       weatherResults = data.list[(i + 1) * 8 - 1];
 
+      var newParagraph = $('<p>');
+      var newParagraph1 = $('<p>');
+      var newParagraph2 = $('<p>');
+      var newHeader = $('<h2>');
+
+      
+
       var temp = weatherResults.main.temp; //grabbing specifically the temp out of our datapoint
       var humidity = weatherResults.main.humidity; //grabbing specifically the temp out of our datapoint
       var wind = weatherResults.wind.speed;
       var [date1] = weatherResults.dt_txt.split(" ");
-      var newParagraph = $('<p>');
-      var newParagraph1 = $('<p>');
-      var newParagraph2 = $('<p>'); //We want to append multiple pararaphs.
+  //We want to append multiple pararaphs.
 
       temp = (temp - 273.15) * 9/5 + 32; //Kelvin to Fahrenheit conversion
       var tempFixed = Math.floor(temp); //rounding Temp to a whole number.
@@ -97,10 +122,15 @@ function cityHandler(event) { //grab what city they want on event
       newParagraph.text("Forecasted Tempature: " + tempFixed + "F°");
       newParagraph1.text("Forecasted Wind: " + wind + " mph");
       newParagraph2.text("Forecasted Humidity:" + humidity + "%");
-       
+      newHeader.text(cityName);
+
+      targetElement1.append(newHeader); 
       targetElement1.append(newParagraph);
       targetElement1.append(newParagraph1);
       targetElement1.append(newParagraph2);
+      targetElement1.append("<hr>");
+      
+      
 
       console.log(temp + humidity + wind + date1);
 
@@ -115,9 +145,7 @@ function cityHandler(event) { //grab what city they want on event
       targetElement2.css('margin', '0 auto');
    
 
-      if (i == 4){
-      itemsAppended = true;
-      }
+      
 
     }
 
@@ -139,5 +167,13 @@ function cityHandler(event) { //grab what city they want on event
 
 
 
+function cityAuto(){
+  var newText = dropDown.text();
+  console.log(newText);
+  
+}
+
+$( window ).on( "load", cityHandler);
 
   cityValue.on('submit', cityHandler);
+  dropDown.on('click', cityAuto);
