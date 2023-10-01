@@ -200,7 +200,7 @@ function cityHandler(event) {
 function cityAuto(event){ //will auto-type our default text if clicked on.
   console.log(event.target);
   $('.whatCity').val(event.target.text);
-  
+  cityHandler(event);
 }
 
 $( window ).on( "load", cityHandler); // we load our function on start, so we can grab San antonios current weather and have icons and temps.
