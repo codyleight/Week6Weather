@@ -6,16 +6,21 @@ var currentTemp = $(".currentTemp")
 var currentWind = $(".currentWind")
 var currentHumidity = $(".currentHumidity")
 var dropDown = $(".itemDefault");
+var dropDown2 = $(".dropdown-divider")
+var drop = $(".dropdown-menu");
 var firstLoad = true;
 var cityName;
+var x = 0;
 
 
-var isAppended = false;
+
+
+
 
 
 var newAnchor = $('<a>');
 
-var itemsAppended = false; //checking if we have previously appended items.
+
 
 var day1 = $(".day1")
 var day2 = $(".day2")
@@ -29,25 +34,38 @@ var day5 = $(".day5")
 
 
 function cityHandler(event) { //grab what city they want on event
+
+  
     
     event.preventDefault();
 
-    if (firstLoad){
+    
+    x++; //using x variable to evaluate later down in the line to empty out our containers on a new search but to also keep our first load containers.
+
+    if (firstLoad){ //first load will be set to san antonio so we don't have to make another fetch request for Sa specifically
 
     cityName = "San Antonio";
     firstLoad = false;
     }else{ 
       cityName = whatCity.val();
-      console.log("here");
+      console.log("here i am");
     }
 
     
+var uniqueId = Math.random().toString(36).substr(2, 9); //section creates anchors and asigns them a random ID.
 
-  
+var anchorId = "anchor-" + uniqueId;
 
-    
-    dropDown.text(cityName);
-     
+var anchor = $("<a></a>", {
+  id: anchorId,
+  text: cityName
+});
+
+  if (x > 1){
+    dropDown.after(anchor);
+    dropDown.children().append(anchor);
+    anchor.addClass("dropdown-item itemDefault text-warning")
+  }
     
 
 
@@ -90,7 +108,7 @@ function cityHandler(event) { //grab what city they want on event
     console.log(tempFixed);
 
     
-
+   
 
     
     for (var i = 0; i < 5; i++){
@@ -119,6 +137,9 @@ function cityHandler(event) { //grab what city they want on event
       var targetElement1 = $(".day" + (i + 1)).children('.card-body'); //appending date to footer cards of every card, each time we run through the forloop +1 is added onto the end of day
      
 
+      
+      
+
       newParagraph.text("Forecasted Tempature: " + tempFixed + "F°");
       newParagraph1.text("Forecasted Wind: " + wind + " mph");
       newParagraph2.text("Forecasted Humidity:" + humidity + "%");
@@ -129,6 +150,7 @@ function cityHandler(event) { //grab what city they want on event
       targetElement1.append(newParagraph1);
       targetElement1.append(newParagraph2);
       targetElement1.append("<hr>");
+
       
       
 
@@ -143,14 +165,18 @@ function cityHandler(event) { //grab what city they want on event
       targetElement2.css('height', '100px'); 
       targetElement2.css('display', 'block'); 
       targetElement2.css('margin', '0 auto');
-   
+      
 
+   
+      
+      
+      
       
 
     }
 
 
-
+   
 
 
 
@@ -159,21 +185,34 @@ function cityHandler(event) { //grab what city they want on event
 
   }); 
 
+
+  if (x > 1){
+    for (var i = 0; i < 5; i++){
+    console.log("Here i am!!!");
+    var targetElement1 = $(".day" + (i + 1)).children('.card-body');
+    targetElement1.empty();
+    }
+
+  }
+  
   cityTitle.text(cityName);
+  
     
 
 
+
 }
 
 
 
-function cityAuto(){
-  var newText = dropDown.text();
-  console.log(newText);
+function cityAuto(){ //will auto-type our default text if clicked on.
+  
+  newText = dropDown.text();
+  $('.whatCity').val(newText);
   
 }
 
-$( window ).on( "load", cityHandler);
+$( window ).on( "load", cityHandler); // we load our function on start, so we can grab San antonios current weather and have icons and temps.
 
   cityValue.on('submit', cityHandler);
   dropDown.on('click', cityAuto);
