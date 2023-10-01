@@ -11,66 +11,59 @@ var drop = $(".dropdown-menu");
 var firstLoad = true;
 var cityName;
 var x = 0;
+var storedAnchors = JSON.parse(localStorage.getItem("storedAnchors")) || []; //create an array that will parse our anchor tags that we appended.
 
-
-
-
-
-
-
-var newAnchor = $('<a>');
-
-
-
-var day1 = $(".day1")
-var day2 = $(".day2")
-var day3 = $(".day3")
-var day4 = $(".day4")
-var day5 = $(".day5")
-
-
-
-
-
-
-function cityHandler(event) { //grab what city they want on event
-
-  
-    
-    event.preventDefault();
-
-    
-    x++; //using x variable to evaluate later down in the line to empty out our containers on a new search but to also keep our first load containers.
-
-    if (firstLoad){ //first load will be set to san antonio so we don't have to make another fetch request for Sa specifically
-
-    cityName = "San Antonio";
-    firstLoad = false;
-    }else{ 
-      cityName = whatCity.val();
-      console.log("here i am");
-    }
-
-    
-var uniqueId = Math.random().toString(36).substr(2, 9); //section creates anchors and asigns them a random ID.
-
-var anchorId = "anchor-" + uniqueId;
-
-var anchor = $("<a></a>", {
-  id: anchorId,
-  text: cityName
+$(document).ready(function() { // on load we append our stored anchor items.
+  console.log(storedAnchors);
+  storedAnchors.forEach(function(storedAnchor) {
+    dropDown.after(storedAnchor); //appending
+  });
 });
 
-  if (x > 1){
+var newAnchor = $('<a>');
+var day1 = $(".day1");
+var day2 = $(".day2");
+var day3 = $(".day3");
+var day4 = $(".day4");
+var day5 = $(".day5");
+
+function cityHandler(event) {
+  event.preventDefault();
+  x++;
+
+  if (firstLoad) { //first load we will default to San antonio as our city name. Else user input. Without a city we do not have a pretty page!
+    cityName = "San Antonio";
+    firstLoad = false;
+  } else {
+    cityName = whatCity.val();
+    console.log("here i am");
+  }
+
+  var uniqueId = Math.random().toString(36).substr(2, 9); //creating unique Anchor tags.
+  var anchorId = "anchor-" + uniqueId;
+  var anchor = $("<a></a>", {
+    id: anchorId,
+    text: cityName
+  });
+
+  if (x > 1) { //This if statement will only run after the page has loaded once, then so on once the user searches again. We dont want our default city appended.
     dropDown.after(anchor);
     dropDown.children().append(anchor);
-    anchor.addClass("dropdown-item itemDefault text-warning")
+    anchor.addClass("dropdown-item itemDefault text-warning");
+    anchor.attr("href", "#");
+
+    storedAnchors.push(anchor.prop('outerHTML')); //the push() method is used to add a new element to the storedAnchors array. 
+    localStorage.setItem("storedAnchors", JSON.stringify(storedAnchors)); //Storing to localstorage
+
+    console.log(anchor);
+    console.log(storedAnchors);
   }
-    
+
+  
 
 
 
-   
+
 
 
     var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&appid=4a9827780393807327e2dc82f1ce3e68';
@@ -111,7 +104,7 @@ var anchor = $("<a></a>", {
    
 
     
-    for (var i = 0; i < 5; i++){
+    for (var i = 0; i < 5; i++){ //for statement for each of our 5 day forecast boxes.
 
       weatherResults = data.list[(i + 1) * 8 - 1];
 
@@ -186,9 +179,8 @@ var anchor = $("<a></a>", {
   }); 
 
 
-  if (x > 1){
+  if (x > 1){ //Once the page has loaded, we will then delete appended card-body elements on a new search or new instance of our CityHandler function
     for (var i = 0; i < 5; i++){
-    console.log("Here i am!!!");
     var targetElement1 = $(".day" + (i + 1)).children('.card-body');
     targetElement1.empty();
     }
