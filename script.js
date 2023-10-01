@@ -205,14 +205,13 @@ var anchor = $("<a></a>", {
 
 
 
-function cityAuto(){ //will auto-type our default text if clicked on.
-  
-  newText = dropDown.text();
-  $('.whatCity').val(newText);
+function cityAuto(event){ //will auto-type our default text if clicked on.
+  console.log(event.target);
+  $('.whatCity').val(event.target.text);
   
 }
 
 $( window ).on( "load", cityHandler); // we load our function on start, so we can grab San antonios current weather and have icons and temps.
 
   cityValue.on('submit', cityHandler);
-  dropDown.on('click', cityAuto);
+  drop.on('click', cityAuto);
