@@ -96,7 +96,7 @@ function cityHandler(event) {
     currentHumidity.text("Current Humidity:" + humidity + "%"); //Humidity in %
 
      //splitting the date, and getting the first index part out so we can have a date with no time.
-    $(".date1").text(currentDate + currentTime); //appending
+    $(".date1").text(currentDate + " " + currentTime); //appending
 
 
   }); 
@@ -171,7 +171,7 @@ function cityHandler(event) {
       targetElement1.append(newParagraph);
       targetElement1.append(newParagraph1);
       targetElement1.append(newParagraph2);
-      targetElement1.append("<hr>");
+      targetElement1.append("<hr>"); //blocker for style.
 
       
       
@@ -216,7 +216,7 @@ function cityHandler(event) {
 
   }
   
-  cityTitle.text(cityName);
+  cityTitle.text(cityName); //update cityname.
   
     
 
