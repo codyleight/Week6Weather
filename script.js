@@ -12,6 +12,10 @@ var firstLoad = true;
 var cityName;
 var x = 0;
 var storedAnchors = JSON.parse(localStorage.getItem("storedAnchors")) || []; //create an array that will parse our anchor tags that we appended.
+var date = new Date();
+var currentTime = date.toLocaleTimeString();
+var currentDate = date.toLocaleDateString();
+
 
 $(document).ready(function() { // on load we append our stored anchor items.
   console.log(storedAnchors);
@@ -62,6 +66,41 @@ function cityHandler(event) {
   
 
 
+  var currentApi = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=4a9827780393807327e2dc82f1ce3e68";
+
+  fetch(currentApi)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data);
+    var weatherResults = data.main; //grabs first element out of our API data, we have multiple for the same day TODO: Get specifically todays time and 
+    var temp = weatherResults.temp; //grabbing specifically the temp out of our datapoint
+    var humidity = weatherResults.humidity; //grabbing specifically the temp out of our datapoint
+    var wind = data.wind.speed;
+    temp = (temp - 273.15) * 9/5 + 32; //Kelvin to Fahrenheit conversion
+    var tempFixed = Math.floor(temp); //rounding Temp to a whole number.
+  
+    console.log(temp + "WInd: " + wind + "Humidity: " + humidity + "Should be our current values")
+
+    var icon = data.weather[0].icon; // Grabs Icon from our current weather.
+    console.log(icon);
+    var weatherIconUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png"; //places icon code inside our link
+
+    var weatherIconElement = $("<img>").attr("src", weatherIconUrl); //creates an image element, with source being our icon above.
+
+    currentTemp.text("Current Tempature: " + tempFixed + "F°"); //updates our text to show current temp.
+    currentTemp.append(weatherIconElement); //appending our image from above
+
+    currentWind.text("Current Wind: " + wind + " mph"); //Wind Speeds in MPH
+    currentHumidity.text("Current Humidity:" + humidity + "%"); //Humidity in %
+
+     //splitting the date, and getting the first index part out so we can have a date with no time.
+    $(".date1").text(currentDate + currentTime); //appending
+
+
+  }); 
+
 
 
 
@@ -83,19 +122,9 @@ function cityHandler(event) {
   
 
 
-    var icon = weatherResults.weather[0].icon; // Grabs Icon from our current weather.
-    var weatherIconUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png"; //places icon code inside our link
-
-    var weatherIconElement = $("<img>").attr("src", weatherIconUrl); //creates an image element, with source being our icon above.
-
-    currentTemp.text("Current Tempature: " + tempFixed + "F°"); //updates our text to show current temp.
-    currentTemp.append(weatherIconElement); //appending our image from above
-
-    currentWind.text("Current Wind: " + wind + " mph"); //Wind Speeds in MPH
-    currentHumidity.text("Current Humidity:" + humidity + "%"); //Humidity in %
-
-    var [date1] = weatherResults.dt_txt.split(" "); //splitting the date, and getting the first index part out so we can have a date with no time.
-    $(".date1").text(date1); //appending
+    
+     //splitting the date, and getting the first index part out so we can have a date with no time.
+    //appending
 
     console.log(data.list);
     console.log(tempFixed);
